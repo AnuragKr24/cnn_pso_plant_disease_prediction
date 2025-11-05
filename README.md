@@ -50,5 +50,5 @@ Users can upload a leaf image, and the app will display predictions from both mo
 
 ---
 
-## 🗂️ Project Structure
+
 
