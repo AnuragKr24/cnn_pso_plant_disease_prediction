@@ -3,7 +3,7 @@ from flask_cors import CORS
 from tensorflow.keras.models import load_model
 import numpy as np
 from PIL import Image
-import io
+import io, gc, tensorflow as tf
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
@@ -57,6 +57,8 @@ def preprocess(image_file):
 
 @app.route("/predict", methods=["POST", "OPTIONS"])
 def predict():
+    global baseline_model, pso_model
+
     if request.method == "OPTIONS":
         res = jsonify({"message": "CORS OK"})
         res.headers.add("Access-Control-Allow-Origin", "*")
@@ -68,9 +70,7 @@ def predict():
         if "image" not in request.files:
             return jsonify({"error": "No image uploaded"}), 400
         
-        # Load models once (lazy)
         load_models()
-
         img = preprocess(request.files["image"])
 
         base_prob = baseline_model.predict(img, verbose=0)[0]
@@ -79,12 +79,20 @@ def predict():
         base_idx = np.argmax(base_prob)
         pso_idx = np.argmax(pso_prob)
 
-        return jsonify({
+        response = jsonify({
             "baseline_prediction": CLASSES[base_idx],
             "baseline_confidence": float(base_prob[base_idx]),
             "pso_prediction": CLASSES[pso_idx],
             "pso_confidence": float(pso_prob[pso_idx])
         })
+
+        # ✅ Free memory so Render doesn't crash
+        tf.keras.backend.clear_session()
+        gc.collect()
+        baseline_model = None
+        pso_model = None
+
+        return response
 
     except Exception as e:
         print("Backend Error:", e)
@@ -93,6 +101,3 @@ def predict():
 @app.route("/", methods=["GET"])
 def home():
     return jsonify({"status": "Backend running"})
-
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
