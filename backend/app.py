@@ -6,7 +6,7 @@ from PIL import Image
 import io
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # -------- Load Models --------
 baseline_model = load_model("models/cnn_baseline.h5")
@@ -51,21 +51,22 @@ def preprocess(image_file):
     return img
 
 # -------- Prediction Route --------
-@app.route("/predict", methods=["POST"])
+@app.route("/predict", methods=["POST", "OPTIONS"])
 def predict():
+    if request.method == "OPTIONS":
+        return jsonify({"message": "CORS preflight success"}), 200
+
     try:
         if "image" not in request.files:
             return jsonify({"error": "No image uploaded"}), 400
         
         img = preprocess(request.files["image"])
 
-        # Baseline model
         base_prob = baseline_model.predict(img, verbose=0)[0]
         base_idx = np.argmax(base_prob)
         base_label = CLASSES[base_idx]
         base_conf = float(base_prob[base_idx])
 
-        # PSO model
         pso_prob = pso_model.predict(img, verbose=0)[0]
         pso_idx = np.argmax(pso_prob)
         pso_label = CLASSES[pso_idx]
@@ -79,8 +80,9 @@ def predict():
         })
 
     except Exception as e:
-        print("❌ Backend Error:", e)
+        print("Backend Error:", e)
         return jsonify({"error": str(e)}), 500
+
 
 # -------- Health Check --------
 @app.route("/", methods=["GET"])
