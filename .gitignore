@@ -1,0 +1,49 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Byte-compiled / optimized files
+*.py[cod]
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Model files (handled via Git LFS)
+*.h5
+!backend/models/*.h5
+
+# Logs
+*.log
+
+
+# Node modules (optional future use)
+node_modules/
+
+# Build folders (if using a build tool like Vite/React later)
+dist/
+build/
+
+# Cache
+.npm/
+.yarn/
+.pnpm-store/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Environment / Secrets (if created later)
+.env
+.env.*

@@ -1,0 +1,45 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #e8f5e9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background: white;
+  border-radius: 20px;
+  padding: 30px 40px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 400px;
+}
+
+.upload-section {
+  margin-bottom: 20px;
+}
+
+button {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #45a049;
+}
+
+#preview img {
+  width: 250px;
+  margin-top: 15px;
+  border-radius: 10px;
+}
+
+#result {
+  margin-top: 25px;
+  color: #2e7d32;
+}

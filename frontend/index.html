@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plant Disease Detection</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🌿 Plant Disease Detection</h1>
+
+    <div class="upload-section">
+      <input type="file" id="imageInput" accept="image/*" />
+      <!-- NOTE: Added id and event param -->
+      <button id="predictBtn" type="button">Predict Disease</button>
+    </div>
+
+    <div id="preview">
+      <img id="previewImage" src="" alt="Image preview" />
+    </div>
+
+    <div id="result">
+      <h3>Baseline Model Prediction: <span id="baseline"></span></h3>
+      <h3>PSO-Tuned Model Prediction: <span id="pso"></span></h3>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
