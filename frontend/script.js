@@ -31,7 +31,11 @@ async function sendImage(event) {
   formData.append('image', file);
 
   try {
-    const response = await fetch('http://127.0.0.1:5000/', {
+    // const response = await fetch('http://127.0.0.1:5000/', {
+    //   method: 'POST',
+    //   body: formData
+    // });
+    const response = await fetch('https://cnn-pso-plant-disease-prediction.onrender.com/predict', {
       method: 'POST',
       body: formData
     });
