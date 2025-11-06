@@ -5,7 +5,7 @@ This project is a **full-stack deep learning web app** that detects plant leaf d
 Users can upload a leaf image, and the app will display predictions from both models for comparison.
 
 ---
-
+ <img src="assets/extension_screenshot.png" alt="Extension Screenshot" width="1000">
 ## 🚀 Live Demo
 
 ### 🌐 Frontend (Netlify)
